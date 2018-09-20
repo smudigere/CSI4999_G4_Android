@@ -2,4 +2,24 @@
     <string name="app_name">GPTM</string>
 
     <string name="Eagle">Eagle</string>
+    <string name="Login">Login</string>
+    <string name="SignUp">Sign Up</string>
+    <string name="Home">Home</string>
+    <string name="Email">Email</string>
+    <string name="Password">Password</string>
+    <string name="Reset_Password">Reset Password</string>
+
+    <string name="LOGIN_STATUS">Login_Status</string>
+    <string name="LOCATION_PERMISSION">Location_Permission</string>
+
+    <string name="Username_s">Username*</string>
+    <string name="Password_s">Password*</string>
+    <string name="Verify_Password_s">Verify Password*</string>
+    <string name="Name_s">Name*</string>
+    <string name="First_Name_s">First Name*</string>
+    <string name="Last_Name_s">Last Name*</string>
+    <string name="Location_s">Location*</string>
+    <string name="Email_s">Email*</string>
+    <string name="Phone_Number_s">Phone Number*</string>
+
 </resources>
