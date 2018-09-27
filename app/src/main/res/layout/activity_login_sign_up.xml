@@ -7,17 +7,6 @@
     android:id="@+id/container"
     >
 
-    <ImageView
-        android:id="@+id/title"
-        android:layout_alignParentTop="true"
-        android:background="@color/colorPrimaryDark"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:contentDescription="@string/app_name"
-        />
-
     <android.support.design.widget.TabLayout
         android:id="@+id/tablayout"
         android:layout_width="match_parent"
