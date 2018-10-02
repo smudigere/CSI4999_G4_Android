@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.gptm.app.R;
+import com.gptm.app.utility.Functions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +56,17 @@ public class SelectPlayerCountFragment extends Fragment implements
     private void init_button() {
 
         mSubmit = mView.findViewById(R.id.submit_button);
-        mSubmit.setOnClickListener((View.OnClickListener) mActivity);
+        mSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Functions.fragment_replacement(
+                        getFragmentManager(),
+                        R.id.relative,
+                        EnterNamesFragment.newInstance(mSpinner.getSelectedItemPosition() + 1),
+                        false
+                );
+            }
+        });
     }
 
 
