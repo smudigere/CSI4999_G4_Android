@@ -1,6 +1,5 @@
 package com.gptm.app.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -42,19 +41,20 @@ public class EnterNamesFragment extends Fragment {
 
         mView = view;
 
-        init_ui_array();
+
+        //init_ui_array();
     }
 
 
+    /*
     private void init_ui_array() {
         init_edit_text_array();
         init_text_view_array();
     }
 
-    private void init_edit_text_array() {
-        EditText[] mEditTextPlayers = new EditText[playersCount];
 
-        RelativeLayout relativeLayout = mView.findViewById(R.id.fragment_relative);
+    private void init_edit_text_array() {
+        mEditTextPlayers = new EditText[playersCount];
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
@@ -65,8 +65,6 @@ public class EnterNamesFragment extends Fragment {
             mEditTextPlayers[i].setId(i + 100);
             mEditTextPlayers[i].setImeOptions(EditorInfo.IME_ACTION_GO);
 
-            Log.i("View ID", String.valueOf(mEditTextPlayers[i].getId()));
-
             if (i != 0) {
 
                 RelativeLayout.LayoutParams params1 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -75,14 +73,16 @@ public class EnterNamesFragment extends Fragment {
                 mEditTextPlayers[i].setLayoutParams(params1);
             }
 
-            relativeLayout.addView(mEditTextPlayers[i]);
+            mRelativeLayout2.addView(mEditTextPlayers[i]);
+        }
+
+        for (int i = 0; i < playersCount; i++) {
+            Log.i("Edittext" + i, String.valueOf(mEditTextPlayers[i].getTranslationY()));
         }
     }
 
     private void init_text_view_array() {
-        TextView[] mTextViewPlayers = new TextView[playersCount];
-
-        RelativeLayout relativeLayout = mView.findViewById(R.id.fragment_relative);
+        mTextViewPlayers = new TextView[playersCount];
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
@@ -93,7 +93,7 @@ public class EnterNamesFragment extends Fragment {
             mTextViewPlayers[i].setLayoutParams(params);
             mTextViewPlayers[i].setId(i + 200);
             mTextViewPlayers[i].setImeOptions(EditorInfo.IME_ACTION_GO);
-
+            mTextViewPlayers[i].setTextSize(16);
 
             if (i != 0) {
 
@@ -103,7 +103,7 @@ public class EnterNamesFragment extends Fragment {
                 mTextViewPlayers[i].setLayoutParams(params1);
             }
 
-            relativeLayout.addView(mTextViewPlayers[i]);
+            mRelativeLayout1.addView(mTextViewPlayers[i]);
         }
-    }
+    }*/
 }
