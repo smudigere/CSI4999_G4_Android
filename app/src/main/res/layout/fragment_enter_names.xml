@@ -1,34 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="horizontal"
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
-    android:id="@+id/fragment_linear_layout"
-    android:layout_weight="1"
-    android:weightSum="1"
     android:clickable="true"
     android:focusable="true"
     android:baselineAligned="false"
     >
 
-    <RelativeLayout
-        android:layout_width="0dp"
+    <ListView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5"
-        android:background="@android:color/transparent"
-        android:id="@+id/fragment_relative_1"
-        android:paddingTop="15dp"
+        android:id="@+id/listView"
+        android:layout_above="@+id/submit_button"
+        android:layout_alignParentTop="true"
         />
 
-    <RelativeLayout
-        android:layout_width="0dp"
+    <Button
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5"
-        android:background="@android:color/transparent"
-        android:id="@+id/fragment_relative_2"
-        android:paddingTop="15dp"
+        android:id="@+id/submit_button"
+        android:layout_alignParentBottom="true"
+        android:text="@string/Submit"
+        android:textSize="20sp"
         />
 
-</LinearLayout>
+</RelativeLayout>

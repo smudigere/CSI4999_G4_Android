@@ -1,5 +1,8 @@
 package com.gptm.app.fragments;
 
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,12 +11,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
+import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gptm.app.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EnterNamesFragment extends Fragment {
 
@@ -25,9 +33,15 @@ public class EnterNamesFragment extends Fragment {
         return fragment;
     }
 
+    private Activity mActivity;
+
     private int playersCount;
 
     private View mView;
+    private ListView mListView;
+    private Button mSubmitButton;
+
+    private ListViewAdapter adapter;
 
     @Nullable
     @Override
@@ -40,70 +54,78 @@ public class EnterNamesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mView = view;
+        mActivity = getActivity();
 
-
-        //init_ui_array();
+        init_list_view();
+        init_button();
     }
 
+    private void init_list_view()   {
 
-    /*
-    private void init_ui_array() {
-        init_edit_text_array();
-        init_text_view_array();
+        mListView = mView.findViewById(R.id.listView);
+
+        adapter = new ListViewAdapter();
+        mListView.setAdapter(adapter);
+
     }
 
+    private void init_button()  {
+        mSubmitButton = mView.findViewById(R.id.submit_button);
+        mSubmitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-    private void init_edit_text_array() {
-        mEditTextPlayers = new EditText[playersCount];
+                for (int i = 0; i < playersCount; i++)  {
+                    EditText editText = mListView.getChildAt(i).findViewById(R.id.player_edit_text);
+                    Log.i("edittext", editText.getText().toString());
+                }
 
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            }
+        });
+    }
 
-        for (int i = 0; i < playersCount; i++) {
-            //Pass the parent as the second parameter to retain layout attributes
-            mEditTextPlayers[i] = new EditText(getContext());
-            mEditTextPlayers[i].setLayoutParams(params);
-            mEditTextPlayers[i].setId(i + 100);
-            mEditTextPlayers[i].setImeOptions(EditorInfo.IME_ACTION_GO);
+    private class ListViewAdapter extends BaseAdapter {
 
-            if (i != 0) {
+        private List<EditText> mEditTexts;
 
-                RelativeLayout.LayoutParams params1 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                params1.addRule(RelativeLayout.BELOW, mEditTextPlayers[i - 1].getId());
+        private ListViewAdapter()   {
+            mEditTexts = new ArrayList<>(playersCount);
+        }
 
-                mEditTextPlayers[i].setLayoutParams(params1);
+        @Override
+        public int getCount() {
+            return playersCount;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return position;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater)
+                        mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.players_name_enter_list, parent, false);
             }
 
-            mRelativeLayout2.addView(mEditTextPlayers[i]);
-        }
+            TextView mPlayerTextView = convertView.findViewById(R.id.player_text_view);
+            mPlayerTextView.setText("Player " + (position + 1) + ":");
+            mPlayerTextView.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
 
-        for (int i = 0; i < playersCount; i++) {
-            Log.i("Edittext" + i, String.valueOf(mEditTextPlayers[i].getTranslationY()));
+
+
+            mEditTexts.add(position, (EditText) convertView.findViewById(R.id.player_edit_text));
+            //mEditTexts[position] = convertView.findViewById(R.id.player_edit_text);
+
+            return convertView;
         }
     }
-
-    private void init_text_view_array() {
-        mTextViewPlayers = new TextView[playersCount];
-
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        for (int i = 0; i < playersCount; i++) {
-            //Pass the parent as the second parameter to retain layout attributes
-            mTextViewPlayers[i] = new TextView(getContext());
-            mTextViewPlayers[i].setText("Player " + (i + 1));
-            mTextViewPlayers[i].setLayoutParams(params);
-            mTextViewPlayers[i].setId(i + 200);
-            mTextViewPlayers[i].setImeOptions(EditorInfo.IME_ACTION_GO);
-            mTextViewPlayers[i].setTextSize(16);
-
-            if (i != 0) {
-
-                RelativeLayout.LayoutParams params1 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                params1.addRule(RelativeLayout.BELOW, mTextViewPlayers[i - 1].getId());
-
-                mTextViewPlayers[i].setLayoutParams(params1);
-            }
-
-            mRelativeLayout1.addView(mTextViewPlayers[i]);
-        }
-    }*/
 }
