@@ -16,12 +16,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gptm.app.R;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.gptm.app.controller.EnterNamesFragementController;
 
 public class EnterNamesFragment extends Fragment {
 
@@ -41,11 +38,11 @@ public class EnterNamesFragment extends Fragment {
     private ListView mListView;
     private Button mSubmitButton;
 
-    private ListViewAdapter adapter;
-
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_enter_names, container, false);
     }
 
@@ -64,7 +61,7 @@ public class EnterNamesFragment extends Fragment {
 
         mListView = mView.findViewById(R.id.listView);
 
-        adapter = new ListViewAdapter();
+        ListViewAdapter adapter = new ListViewAdapter();
         mListView.setAdapter(adapter);
 
     }
@@ -78,6 +75,8 @@ public class EnterNamesFragment extends Fragment {
                 for (int i = 0; i < playersCount; i++)  {
                     EditText editText = mListView.getChildAt(i).findViewById(R.id.player_edit_text);
                     Log.i("edittext", editText.getText().toString());
+
+                    new EnterNamesFragementController(mActivity).execute();
                 }
 
             }
@@ -85,12 +84,6 @@ public class EnterNamesFragment extends Fragment {
     }
 
     private class ListViewAdapter extends BaseAdapter {
-
-        private List<EditText> mEditTexts;
-
-        private ListViewAdapter()   {
-            mEditTexts = new ArrayList<>(playersCount);
-        }
 
         @Override
         public int getCount() {
@@ -119,11 +112,6 @@ public class EnterNamesFragment extends Fragment {
             TextView mPlayerTextView = convertView.findViewById(R.id.player_text_view);
             mPlayerTextView.setText("Player " + (position + 1) + ":");
             mPlayerTextView.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-
-
-
-            mEditTexts.add(position, (EditText) convertView.findViewById(R.id.player_edit_text));
-            //mEditTexts[position] = convertView.findViewById(R.id.player_edit_text);
 
             return convertView;
         }

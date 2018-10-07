@@ -9,6 +9,7 @@
     <string name="Password">Password</string>
     <string name="Reset_Password">Reset Password</string>
     <string name="Play">Play</string>
+    <string name="Next">Next</string>
 
     <string name="LOGIN_STATUS">Login_Status</string>
     <string name="LOCATION_PERMISSION">Location_Permission</string>
