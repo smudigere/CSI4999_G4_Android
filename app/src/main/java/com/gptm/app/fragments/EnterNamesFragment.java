@@ -20,6 +20,10 @@ import android.widget.TextView;
 import com.gptm.app.R;
 import com.gptm.app.controller.EnterNamesFragementController;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class EnterNamesFragment extends Fragment {
 
     public static EnterNamesFragment newInstance(int playersCount)  {
@@ -72,18 +76,34 @@ public class EnterNamesFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                JSONArray jsonArray = new JSONArray();
+
                 for (int i = 0; i < playersCount; i++)  {
                     EditText editText = mListView.getChildAt(i).findViewById(R.id.player_edit_text);
                     Log.i("edittext", editText.getText().toString());
 
-                    new EnterNamesFragementController(mActivity).execute();
+                    jsonArray.put(editText.getText().toString());
                 }
 
+                JSONObject jsonObject = new JSONObject();
+                try {
+
+                    jsonObject.put("Players", jsonArray);
+
+                    new EnterNamesFragementController(mActivity, jsonObject).execute();
+
+                    Log.i("JSONARRAY", jsonObject.toString());
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
 
     private class ListViewAdapter extends BaseAdapter {
+
+        private String[] testNames = new String[]{"Anvitha", "Isida", "Randall", "Jordan", "Nikita", "William", "Samartha", "Mike", "Dave", "Cathy"};
 
         @Override
         public int getCount() {
@@ -112,6 +132,9 @@ public class EnterNamesFragment extends Fragment {
             TextView mPlayerTextView = convertView.findViewById(R.id.player_text_view);
             mPlayerTextView.setText("Player " + (position + 1) + ":");
             mPlayerTextView.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+
+            EditText mEnterPlayer = convertView.findViewById(R.id.player_edit_text);
+            mEnterPlayer.setText(testNames[position]);
 
             return convertView;
         }

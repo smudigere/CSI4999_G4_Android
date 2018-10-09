@@ -1,18 +1,35 @@
 package com.gptm.app.controller;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 
 import com.gptm.app.EnterScoreActivity;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class EnterNamesFragementController extends AsyncTask<Void, Void, String> {
 
+    @SuppressLint("StaticFieldLeak")
     private Activity mActivity;
+    private Bundle mBundle;
 
-    public EnterNamesFragementController(Activity activity)  {
-        mActivity = activity;
+    public EnterNamesFragementController(Activity activity, JSONObject playersJsonObj)  {
+
+        try {
+
+            mActivity = activity;
+
+            mBundle = new Bundle();
+            mBundle.putString("Players", playersJsonObj.toString());
+
+        } catch (Exception e)   {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -25,6 +42,9 @@ public class EnterNamesFragementController extends AsyncTask<Void, Void, String>
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
 
-        mActivity.startActivity(new Intent(mActivity, EnterScoreActivity.class));
+        Intent mIntent = new Intent(mActivity, EnterScoreActivity.class);
+        mIntent.putExtras(mBundle);
+
+        mActivity.startActivity(mIntent);
     }
 }
