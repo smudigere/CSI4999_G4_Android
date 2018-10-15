@@ -1,21 +1,21 @@
 package com.gptm.app.fragments;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.gptm.app.EnterScoreActivity;
 import com.gptm.app.R;
+import com.gptm.app.controller.EnterScoreRecyclerAdapter;
 
 public class EnterHoleScoreFragment extends Fragment implements
         View.OnClickListener    {
@@ -35,8 +35,8 @@ public class EnterHoleScoreFragment extends Fragment implements
 
     private View mView;
     private TextView mHoleNumTextView;
-    private ListView mListView;
     private Button mNextButton;
+    private RecyclerView mRecylerView;
 
     @Nullable
     @Override
@@ -59,9 +59,12 @@ public class EnterHoleScoreFragment extends Fragment implements
         mHoleNumTextView = mView.findViewById(R.id.hole_num_text_view);
         mHoleNumTextView.setText("Hole " + holeNumber);
 
-        mListView = mView.findViewById(R.id.listView);
-        ListViewAdapter adapter = new ListViewAdapter();
-        mListView.setAdapter(adapter);
+        mRecylerView = mView.findViewById(R.id.recylerView);
+
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        mRecylerView.setLayoutManager(mLayoutManager);
+
+        mRecylerView.setAdapter(new EnterScoreRecyclerAdapter(mActivity, mActivity.getPlayers(), mActivity.getPlayers().length));
 
         mNextButton = mView.findViewById(R.id.next_button);
         mNextButton.setOnClickListener(this);
@@ -70,68 +73,10 @@ public class EnterHoleScoreFragment extends Fragment implements
     @Override
     public void onClick(View view) {
 
-        switch (view.getId())   {
+        switch (view.getId()) {
             case R.id.next_button:
                 mActivity.addEnterHoleScoreFragment(holeNumber);
                 break;
-        }
-    }
-
-    private class ListViewAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            return mActivity.getPlayerNames().length;
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return position;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            if (convertView == null) {
-                LayoutInflater inflater = (LayoutInflater)
-                        mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.score_enter_list, parent, false);
-            }
-
-            TextView mPlayerName = convertView.findViewById(R.id.player_name_text_view);
-            mPlayerName.setText(mActivity.getPlayerNames()[position]);
-
-            final TextView mShotTextView = convertView.findViewById(R.id.shots_text_view);
-
-            Button mAddButton = convertView.findViewById(R.id.increase_button);
-            mAddButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int count = Integer.parseInt(mShotTextView.getText().toString());
-                    count++;
-                    mShotTextView.setText(String.valueOf(count));
-                }
-            });
-
-            Button mSubtractButton = convertView.findViewById(R.id.decrease_button);
-            mSubtractButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int count = Integer.parseInt(mShotTextView.getText().toString());
-
-                    if (count > 0)
-                        count--;
-
-                    mShotTextView.setText(String.valueOf(count));
-                }
-            });
-
-            return convertView;
         }
     }
 }

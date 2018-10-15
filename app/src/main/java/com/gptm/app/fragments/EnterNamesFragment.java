@@ -19,10 +19,14 @@ import android.widget.TextView;
 
 import com.gptm.app.R;
 import com.gptm.app.controller.EnterNamesFragementController;
+import com.gptm.app.model.Player;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EnterNamesFragment extends Fragment {
 
@@ -76,27 +80,14 @@ public class EnterNamesFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                JSONArray jsonArray = new JSONArray();
+                Player[] players = new Player[playersCount];
 
                 for (int i = 0; i < playersCount; i++)  {
                     EditText editText = mListView.getChildAt(i).findViewById(R.id.player_edit_text);
-                    Log.i("edittext", editText.getText().toString());
-
-                    jsonArray.put(editText.getText().toString());
+                    players[i] = new Player(editText.getText().toString());
                 }
 
-                JSONObject jsonObject = new JSONObject();
-                try {
-
-                    jsonObject.put("Players", jsonArray);
-
-                    new EnterNamesFragementController(mActivity, jsonObject).execute();
-
-                    Log.i("JSONARRAY", jsonObject.toString());
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                new EnterNamesFragementController(mActivity, players);
             }
         });
     }

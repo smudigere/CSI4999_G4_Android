@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
-        <activity android:name=".EnterScoreActivity"></activity>
+        <activity android:name=".EnterScoreActivity" />
+        <activity android:name=".ScoreActivity"></activity>
     </application>
 
 </manifest>
