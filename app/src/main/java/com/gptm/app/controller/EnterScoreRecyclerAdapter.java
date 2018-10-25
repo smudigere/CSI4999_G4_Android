@@ -12,23 +12,32 @@ import android.widget.TextView;
 import com.gptm.app.R;
 import com.gptm.app.model.Player;
 
+import java.util.HashMap;
+
 public class EnterScoreRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
 
-    private int totalPlayers;
+    private int totalPlayers, holeNumber;
     private Player[] players;
+    private HashMap<Integer, Integer> mScoreMap;
 
-    public EnterScoreRecyclerAdapter(Context context, Player[] players, int totalPlayers)    {
+    public EnterScoreRecyclerAdapter(Context context, Player[] players, int totalPlayers, int holeNumber)    {
 
         mContext = context;
         this.totalPlayers = totalPlayers;
+        this.holeNumber = holeNumber;
         this.players = players;
+        mScoreMap = new HashMap<>();
+
+        for (int i = 0; i < players.length; i++)
+            mScoreMap.put(i, 0);
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView mPlayerName;
+        private TextView mPlayerName, mShotTextView;
+        private Button mAddButton, mSubtractButton;
 
         ViewHolder(View view) {
             super(view);
@@ -36,31 +45,9 @@ public class EnterScoreRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
             try {
 
                 mPlayerName = view.findViewById(R.id.player_name_text_view);
-
-                final TextView mShotTextView = view.findViewById(R.id.shots_text_view);
-
-                Button mAddButton = view.findViewById(R.id.increase_button);
-                mAddButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        int count = Integer.parseInt(mShotTextView.getText().toString());
-                        count++;
-                        mShotTextView.setText(String.valueOf(count));
-                    }
-                });
-
-                Button mSubtractButton = view.findViewById(R.id.decrease_button);
-                mSubtractButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        int count = Integer.parseInt(mShotTextView.getText().toString());
-
-                        if (count > 0)
-                            count--;
-
-                        mShotTextView.setText(String.valueOf(count));
-                    }
-                });
+                mShotTextView = view.findViewById(R.id.shots_text_view);
+                mAddButton = view.findViewById(R.id.increase_button);
+                mSubtractButton = view.findViewById(R.id.decrease_button);
 
             } catch (Exception ignored) {}
         }
@@ -78,9 +65,37 @@ public class EnterScoreRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
 
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
 
-        ((ViewHolder) holder).mPlayerName.setText(players[position].getPlayerName());
+        final ViewHolder viewHolder = (ViewHolder) holder;
+
+        viewHolder.mPlayerName.setText(players[position].getPlayerName());
+        viewHolder.mAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int count = Integer.parseInt(viewHolder.mShotTextView.getText().toString());
+                count++;
+                viewHolder.mShotTextView.setText(String.valueOf(count));
+                mScoreMap.put(position, count);
+            }
+        });
+
+        viewHolder.mSubtractButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int count = Integer.parseInt(viewHolder.mShotTextView.getText().toString());
+
+                if (count > 0)
+                    count--;
+
+                viewHolder.mShotTextView.setText(String.valueOf(count));
+                mScoreMap.put(position, count);
+            }
+        });
+    }
+
+    public HashMap<Integer, Integer> getmScoreMap() {
+        return mScoreMap;
     }
 
     @Override

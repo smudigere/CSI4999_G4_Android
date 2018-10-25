@@ -1,12 +1,15 @@
 package com.gptm.app.utility;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.gptm.app.R;
+import com.gptm.app.controller.PlayersSql;
+import com.gptm.app.model.Player;
 
 /**
  * useful static functions
@@ -35,5 +38,29 @@ public final class Functions {
         try {
             fragmentManager.popBackStack();
         } catch (Exception ignored) {}
+    }
+
+    public static void enterPlayers(Player[] players, Context context)  {
+        try {
+
+            PlayersSql sql = new PlayersSql(context);
+            sql.insertPlayers(players);
+
+            sql.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Player[] getPlayers(Context context) {
+
+        PlayersSql sql = new PlayersSql(context);
+
+        try {
+            return sql.getPlayers();
+        } finally {
+            sql.close();
+        }
     }
 }

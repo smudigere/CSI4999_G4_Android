@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,14 +18,10 @@ import android.widget.TextView;
 
 import com.gptm.app.R;
 import com.gptm.app.controller.EnterNamesFragementController;
+import com.gptm.app.controller.HoleCount;
 import com.gptm.app.model.Player;
+import com.gptm.app.utility.Functions;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class EnterNamesFragment extends Fragment {
 
@@ -87,7 +82,9 @@ public class EnterNamesFragment extends Fragment {
                     players[i] = new Player(editText.getText().toString());
                 }
 
-                new EnterNamesFragementController(mActivity, players);
+                Functions.enterPlayers(players, mActivity);
+
+                new EnterNamesFragementController(mActivity);
             }
         });
     }

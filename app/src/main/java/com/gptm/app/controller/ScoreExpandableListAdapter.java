@@ -1,25 +1,16 @@
-/*
- * This file is added to help Categories Expand
- * @author Samartha Mudigere
- * @copyright Coupon Wallet, LLC
- * @Version 2.0
- * @build 0.1
- */
-
 package com.gptm.app.controller;
 
 import android.content.Context;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gptm.app.R;
-
-import java.util.HashMap;
-import java.util.List;
+import com.gptm.app.model.Player;
 
 
 /**
@@ -30,25 +21,25 @@ import java.util.List;
 public class ScoreExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
-    private List<String> listDataHeader;
-    private HashMap<String, List<String>> listHashMap;
+    private int holeCount;
+    private Player[] mPlayers;
 
-
-    public ScoreExpandableListAdapter(Context context, List<String> listDataHeader, HashMap<String, List<String>> listHashMap) {
+    public ScoreExpandableListAdapter(Context context, int holeCount, Player[] players) {
         this.context = context;
-        this.listDataHeader = listDataHeader;
-        this.listHashMap = listHashMap;
+        this.holeCount = holeCount;
+        this.mPlayers = players;
+
     }
 
     @Override
     public int getGroupCount() {
-        return listDataHeader.size();
+        return holeCount;
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
         try {
-            return listHashMap.get(listDataHeader.get(groupPosition)).size();
+            return mPlayers.length;
         } catch (Exception e) {
             return 0;
         }
@@ -56,12 +47,12 @@ public class ScoreExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getGroup(int groupPosition) {
-        return listDataHeader.get(groupPosition);
+        return groupPosition;
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return listHashMap.get(listDataHeader.get(groupPosition)).get(childPosition);
+        return childPosition;
     }
 
     @Override
@@ -87,24 +78,19 @@ public class ScoreExpandableListAdapter extends BaseExpandableListAdapter {
 
         try {
 
-            String headerTitle = (String) getGroup(groupPosition);
-
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.score_view_list, parent, false);
             }
 
-            convertView.setBackgroundColor(context.getResources().getColor(R.color.itemTextColor));
-
             TextView mHoleNumTextView = convertView.findViewById(R.id.hole_num_text_view);
+            mHoleNumTextView.setText("Hole " + (groupPosition + 1));
+            mHoleNumTextView.setGravity(Gravity.CENTER);
 
-            if (isExpanded) {
+            if (isExpanded)
                 convertView.setBackgroundColor(context.getResources().getColor(R.color.colorPrimaryDark));
-
-            } else {
+            else
                 convertView.setBackgroundColor(context.getResources().getColor(R.color.itemTextColor));
-
-            }
 
         } catch (Exception ignored) {}
 
@@ -114,30 +100,30 @@ public class ScoreExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-        final String childText = (String) getChild(groupPosition, childPosition);
-
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.score_view_list, parent, false);
         }
 
         TextView mHoleNumTextView = convertView.findViewById(R.id.hole_num_text_view);
+        mHoleNumTextView.setText(mPlayers[childPosition].getPlayerName());
+        mHoleNumTextView.setGravity(Gravity.START);
 
+        try {
+
+            TextView mShotsTextView = convertView.findViewById(R.id.shots_text_view);
+            Log.i("ADAPTERRRRR", ScoreTrackMap.getInstance().getmScoreMapList().get(groupPosition).get(childPosition).toString());
+            mShotsTextView.setText(ScoreTrackMap.getInstance().getmScoreMapList().get(groupPosition).get(childPosition).toString());
+
+        } catch (Exception ignored) {
+            ignored.printStackTrace();
+        }
 
         return convertView;
     }
 
-    /**
-     * Decides whether the child categories is clickable or not.
-     * @param groupPosition int <p the parent position />
-     * @param childPosition <p the child position that is clicked />
-     * @return boolean < if the child categories can be clicked or selected upon- set "true"
-     *  else
-     *  if the child categories must not be allowed to click (or selected)- set "false"
-     * />
-     */
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return true;
+        return false;
     }
 }

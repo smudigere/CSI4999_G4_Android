@@ -1,12 +1,12 @@
 package com.gptm.app.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.gptm.app.EnterScoreActivity;
 import com.gptm.app.R;
 import com.gptm.app.controller.EnterScoreRecyclerAdapter;
+import com.gptm.app.controller.ScoreTrackMap;
 
 public class EnterHoleScoreFragment extends Fragment implements
         View.OnClickListener    {
@@ -32,11 +33,9 @@ public class EnterHoleScoreFragment extends Fragment implements
     private int holeNumber, totalHoleCount;
 
     private EnterScoreActivity mActivity;
+    private EnterScoreRecyclerAdapter adapter;
 
     private View mView;
-    private TextView mHoleNumTextView;
-    private Button mNextButton;
-    private RecyclerView mRecylerView;
 
     @Nullable
     @Override
@@ -56,17 +55,24 @@ public class EnterHoleScoreFragment extends Fragment implements
 
     private void init_ui()  {
 
-        mHoleNumTextView = mView.findViewById(R.id.hole_num_text_view);
+        TextView mHoleNumTextView = mView.findViewById(R.id.hole_num_text_view);
         mHoleNumTextView.setText("Hole " + holeNumber);
 
-        mRecylerView = mView.findViewById(R.id.recylerView);
+        RecyclerView mRecylerView = mView.findViewById(R.id.recylerView);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mRecylerView.setLayoutManager(mLayoutManager);
 
-        mRecylerView.setAdapter(new EnterScoreRecyclerAdapter(mActivity, mActivity.getPlayers(), mActivity.getPlayers().length));
+        adapter =
+                new EnterScoreRecyclerAdapter(
+                        mActivity,
+                        mActivity.getPlayers(),
+                        mActivity.getPlayers().length,
+                        (holeNumber - 1));
 
-        mNextButton = mView.findViewById(R.id.next_button);
+        mRecylerView.setAdapter(adapter);
+
+        Button mNextButton = mView.findViewById(R.id.next_button);
         mNextButton.setOnClickListener(this);
     }
 
@@ -75,6 +81,8 @@ public class EnterHoleScoreFragment extends Fragment implements
 
         switch (view.getId()) {
             case R.id.next_button:
+                ScoreTrackMap.getInstance().getmScoreMapList().add(holeNumber - 1, adapter.getmScoreMap());
+                Log.i("HASHMAP", ScoreTrackMap.getInstance().getmScoreMapList().toString());
                 mActivity.addEnterHoleScoreFragment(holeNumber);
                 break;
         }

@@ -20,16 +20,12 @@ public class EnterNamesFragementController extends AsyncTask<Void, Void, String>
 
     @SuppressLint("StaticFieldLeak")
     private Activity mActivity;
-    private Intent mIntent;
 
-    public EnterNamesFragementController(Activity activity, Player[] players)  {
+    public EnterNamesFragementController(Activity activity)  {
 
         try {
 
             mActivity = activity;
-
-            mIntent = new Intent(mActivity, EnterScoreActivity.class);
-            mIntent.putExtra("PLAYERS", players);
 
             execute();
         } catch (Exception e)   {
@@ -47,6 +43,8 @@ public class EnterNamesFragementController extends AsyncTask<Void, Void, String>
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
 
-        mActivity.startActivity(mIntent);
+        HoleCount.getInstance().setHoleCount(3);
+        
+        mActivity.startActivity(new Intent(mActivity, EnterScoreActivity.class));
     }
 }
