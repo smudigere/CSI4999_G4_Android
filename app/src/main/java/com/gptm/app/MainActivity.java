@@ -5,12 +5,20 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.gptm.app.api.StartRoundApi;
+import com.gptm.app.api.WaitTimeApi;
 import com.gptm.app.fragments.EnterNamesFragment;
 import com.gptm.app.fragments.HomeFragment;
 import com.gptm.app.fragments.SelectGolfCourseFragment;
@@ -48,6 +56,16 @@ public class MainActivity extends AppCompatActivity implements
                 HomeFragment.newInstance(),
                 false
         );
+
+        String[] s = { "India ", "Arica", "India ", "Arica", "India ", "Arica",
+                "India ", "Arica", "India ", "Arica" };
+
+        final ArrayAdapter<String> adp = new ArrayAdapter<String>(MainActivity.this,
+                android.R.layout.simple_spinner_item, s);
+
+        final Spinner sp = new Spinner(MainActivity.this);
+        sp.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        sp.setAdapter(adp);
 
         //setTitle(null); //Required to hide the App Name from showing up on the toolbar.
     }
@@ -99,4 +117,5 @@ public class MainActivity extends AppCompatActivity implements
 
         }
     }
+
 }

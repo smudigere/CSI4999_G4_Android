@@ -16,21 +16,19 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class EnterNamesFragementController extends AsyncTask<Void, Void, String> {
+public class SelectFlagColorController extends AsyncTask<Void, Void, String> {
 
     @SuppressLint("StaticFieldLeak")
     private Activity mActivity;
 
-    public EnterNamesFragementController(Activity activity)  {
+    public SelectFlagColorController(Activity activity)  {
 
         try {
 
             mActivity = activity;
 
             execute();
-        } catch (Exception e)   {
-            e.printStackTrace();
-        }
+        } catch (Exception ignored)   {}
     }
 
     @Override
@@ -43,7 +41,7 @@ public class EnterNamesFragementController extends AsyncTask<Void, Void, String>
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
 
-        HoleCount.getInstance().setHoleCount(3);
+        HoleCount.getInstance().setHoleCount(18);
         
         mActivity.startActivity(new Intent(mActivity, EnterScoreActivity.class));
     }

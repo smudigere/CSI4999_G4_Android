@@ -5,24 +5,57 @@
     android:layout_height="match_parent"
     >
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/hole_num_text_view"
-        android:gravity="center"
-        android:padding="12dp"
-        android:textSize="18sp"
-        android:layout_alignParentTop="true"
+        android:layout_height="50dp"
+        android:weightSum="1"
         android:background="@android:color/darker_gray"
-        android:textColor="@android:color/black"
-        />
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:id="@+id/linear_layout"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/hole_num_text_view"
+            android:gravity="center"
+            android:padding="12dp"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:layout_weight="0.33"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/par_num_text_view"
+            android:gravity="center"
+            android:padding="12dp"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:layout_weight="0.33"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/yard_num_text_view"
+            android:gravity="center"
+            android:padding="12dp"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:layout_weight="0.34"
+            />
+
+    </LinearLayout>
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listView"
         android:layout_above="@+id/next_button"
-        android:layout_below="@+id/hole_num_text_view"
+        android:layout_below="@+id/linear_layout"
         android:visibility="invisible"
         />
 
@@ -33,7 +66,7 @@
         android:divider="@android:color/darker_gray"
         android:scrollbars="vertical"
         android:layout_above="@+id/next_button"
-        android:layout_below="@+id/hole_num_text_view"
+        android:layout_below="@+id/linear_layout"
         />
 
     <Button

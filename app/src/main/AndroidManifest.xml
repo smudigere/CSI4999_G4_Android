@@ -24,7 +24,8 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".EnterScoreActivity" />
-        <activity android:name=".ScoreActivity"></activity>
+        <activity android:name=".ScoreActivity" />
+        <activity android:name=".ViewGolfCourseActivity"></activity>
     </application>
 
 </manifest>

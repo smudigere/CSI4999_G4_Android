@@ -17,7 +17,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.gptm.app.R;
-import com.gptm.app.controller.EnterNamesFragementController;
 import com.gptm.app.controller.HoleCount;
 import com.gptm.app.model.Player;
 import com.gptm.app.utility.Functions;
@@ -84,7 +83,23 @@ public class EnterNamesFragment extends Fragment {
 
                 Functions.enterPlayers(players, mActivity);
 
-                new EnterNamesFragementController(mActivity);
+                Functions.fragment_replacement(
+                        getFragmentManager(),
+                        R.id.relative,
+                        SelectFlagColorFragment.newInstance(),
+                        false
+                );
+                /*
+                Player[] players = new Player[playersCount];
+
+                for (int i = 0; i < playersCount; i++)  {
+                    EditText editText = mListView.getChildAt(i).findViewById(R.id.player_edit_text);
+                    players[i] = new Player(editText.getText().toString());
+                }
+
+                Functions.enterPlayers(players, mActivity);
+
+                new SelectFlagColorController(mActivity);*/
             }
         });
     }

@@ -43,7 +43,7 @@ public class HttpConnection {
         conn.setConnectTimeout(15000); // milliseconds
         conn.setRequestMethod("POST");
 
-        if ((i == 0))
+        if (i == 0)
             conn.setRequestMethod("POST");
         else
             conn.setRequestMethod("GET");

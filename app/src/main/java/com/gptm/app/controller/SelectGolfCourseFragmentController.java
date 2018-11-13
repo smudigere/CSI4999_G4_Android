@@ -50,10 +50,10 @@ public class SelectGolfCourseFragmentController extends AsyncTask<Void, Void, Bo
 
         try {
 
-            if (result)
+            //if (result)
                 init_spinner_adapter();
-            else
-                Toast.makeText(context, "No Internet Connection!", Toast.LENGTH_SHORT).show();
+            //else
+                //Toast.makeText(context, "No Internet Connection!", Toast.LENGTH_SHORT).show();
 
         } catch (Exception ignored) {}
     }
@@ -61,15 +61,15 @@ public class SelectGolfCourseFragmentController extends AsyncTask<Void, Void, Bo
     private void init_spinner_adapter() {
         try {
 
-            JSONArray gcArray = new JSONArray(API_RESULT);
+            //JSONArray gcArray = new JSONArray(API_RESULT);
 
             // Spinner Drop down elements
             List<String> places = new ArrayList<>();
 
-            for (int i = 0; i < gcArray.length(); i++)
-                places.add(gcArray.getString(i));
+            //for (int i = 0; i < gcArray.length(); i++)
+            places.add("Fieldstone Golf Club");
+            places.add("Radrick Farms");
 
-            Log.i("Places", places.toString());
             // Creating adapter for spinner
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, places);
 
@@ -79,6 +79,8 @@ public class SelectGolfCourseFragmentController extends AsyncTask<Void, Void, Bo
             // attaching data adapter to spinner
             spinner.setAdapter(dataAdapter);
 
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+            ignored.printStackTrace();
+        }
     }
 }

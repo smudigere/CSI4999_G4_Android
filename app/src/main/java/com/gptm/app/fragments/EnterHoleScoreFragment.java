@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,6 +19,11 @@ import com.gptm.app.R;
 import com.gptm.app.controller.EnterScoreRecyclerAdapter;
 import com.gptm.app.controller.ScoreTrackMap;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.concurrent.TimeUnit;
+
 public class EnterHoleScoreFragment extends Fragment implements
         View.OnClickListener    {
 
@@ -30,12 +36,14 @@ public class EnterHoleScoreFragment extends Fragment implements
         return fragment;
     }
 
-    private int holeNumber, totalHoleCount;
+    private int holeNumber, totalHoleCount, clickCounter;
 
     private EnterScoreActivity mActivity;
     private EnterScoreRecyclerAdapter adapter;
 
     private View mView;
+
+    private JSONObject[] jsonObjects;
 
     @Nullable
     @Override
@@ -50,6 +58,16 @@ public class EnterHoleScoreFragment extends Fragment implements
         mActivity = (EnterScoreActivity) getActivity();
         mView = view;
 
+        clickCounter = 0;
+        jsonObjects = new JSONObject[3];
+        try {
+            jsonObjects[0] = new JSONObject("{\"playing\":3,\"waiting\":2,\"esttime\":350}");
+            jsonObjects[1] = new JSONObject("{\"playing\":3,\"waiting\":2,\"esttime\":340}");
+            jsonObjects[2] = new JSONObject("{\"playing\":3,\"waiting\":1,\"esttime\":240}");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         init_ui();
     }
 
@@ -57,6 +75,26 @@ public class EnterHoleScoreFragment extends Fragment implements
 
         TextView mHoleNumTextView = mView.findViewById(R.id.hole_num_text_view);
         mHoleNumTextView.setText("Hole " + holeNumber);
+
+        String[] parText = {
+                "Par 4",
+                "Par 3",
+                "Par 4",
+                "Par 4",
+                "Par 4"
+        };
+        TextView mParNumTextView = mView.findViewById(R.id.par_num_text_view);
+        mParNumTextView.setText(parText[holeNumber - 1]);
+
+        String[] yardText = {
+                "376 Yards",
+                "130 Yards",
+                "279 Yards",
+                "324 Yards",
+                "325 Yards"
+        };
+        TextView mYardNumTextView = mView.findViewById(R.id.yard_num_text_view);
+        mYardNumTextView.setText(yardText[holeNumber - 1]);
 
         RecyclerView mRecylerView = mView.findViewById(R.id.recylerView);
 
@@ -81,9 +119,29 @@ public class EnterHoleScoreFragment extends Fragment implements
 
         switch (view.getId()) {
             case R.id.next_button:
-                ScoreTrackMap.getInstance().getmScoreMapList().add(holeNumber - 1, adapter.getmScoreMap());
-                Log.i("HASHMAP", ScoreTrackMap.getInstance().getmScoreMapList().toString());
-                mActivity.addEnterHoleScoreFragment(holeNumber);
+
+                if (holeNumber == 2)    {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                    try {
+                        long waitTime = TimeUnit.SECONDS.toMinutes(Long.parseLong(jsonObjects[clickCounter].getString("esttime")));
+
+                        builder.setTitle("Estimated Wait Time")
+                                .setMessage("There are " + jsonObjects[clickCounter].getString("waiting") + " rounds playing ahead of you.\nYour estimated" +
+                                        " wait time is " + waitTime + " minutes.")
+                                .show();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    clickCounter++;
+                } else {
+                    ScoreTrackMap.getInstance().getmScoreMapList().add(holeNumber - 1, adapter.getmScoreMap());
+                    mActivity.addEnterHoleScoreFragment(holeNumber);
+                }
+
                 break;
         }
     }

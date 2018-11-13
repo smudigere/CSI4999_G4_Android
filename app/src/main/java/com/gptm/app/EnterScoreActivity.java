@@ -75,7 +75,7 @@ public class EnterScoreActivity extends AppCompatActivity   {
 
                 break;
             case R.id.item2:        //View Golf Course
-
+                startActivity(new Intent(this, ViewGolfCourseActivity.class));
                 break;
         }
 

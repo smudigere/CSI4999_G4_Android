@@ -34,5 +34,6 @@
 
     <string name="Select_the_number_of_players_c">Select the number of players:</string>
     <string name="Select_the_closest_golf_course_c">Select the closest golf course:</string>
+    <string name="Select_Flag_Color_c">Select Flag Color:</string>
 
 </resources>
