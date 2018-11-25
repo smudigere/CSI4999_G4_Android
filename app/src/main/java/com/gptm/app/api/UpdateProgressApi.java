@@ -42,4 +42,8 @@ public class UpdateProgressApi extends AsyncTask<String, String, Boolean> {
             Log.i(getClass().toString(), API_RESULT);
 
     }
+
+    public interface Delegate   {
+        void updateProgress(String json);
+    }
 }

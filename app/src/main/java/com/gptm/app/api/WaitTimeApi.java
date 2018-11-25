@@ -42,4 +42,8 @@ public class WaitTimeApi extends AsyncTask<String, String, Boolean> {
             Log.i(getClass().toString(), API_RESULT);
 
     }
+
+    public interface Delegate   {
+        void waitTime();
+    }
 }

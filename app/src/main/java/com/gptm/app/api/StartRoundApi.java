@@ -40,11 +40,11 @@ public class StartRoundApi extends AsyncTask<String, String, Boolean> {
         super.onPostExecute(result);
 
         if (result)
-            delegate.deliverData(API_RESULT);
+            delegate.startRound(API_RESULT);
 
     }
 
     public interface Delegate   {
-        void deliverData(String data);
+        void startRound(String data);
     }
 }

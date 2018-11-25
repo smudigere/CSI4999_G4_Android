@@ -81,7 +81,7 @@ public class SelectPlayerCountFragment extends Fragment implements
         // Spinner Drop down elements
         List<String> categories = new ArrayList<>();
 
-        for (int i = 1; i <= 10; i++)
+        for (int i = 1; i < 5; i++)
             categories.add(String.valueOf(i));
 
         // Creating adapter for spinner

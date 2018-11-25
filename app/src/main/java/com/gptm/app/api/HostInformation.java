@@ -7,4 +7,5 @@ class HostInformation {
     static String STARTROUND = "core/startround.php?";
     static String ENDROUND = "core/endround.php?";
     static String UPDATEPROGRESS = "core/timestamp.php?";
+    static String COURSESEARCH = "core/coursesearch.php";
 }

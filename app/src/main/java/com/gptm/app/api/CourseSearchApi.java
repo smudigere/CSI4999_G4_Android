@@ -5,19 +5,18 @@ import android.util.Log;
 
 import com.gptm.app.utility.HttpConnection;
 
+import static com.gptm.app.api.HostInformation.COURSESEARCH;
 import static com.gptm.app.api.HostInformation.HOST;
-import static com.gptm.app.api.HostInformation.ENDROUND;
 
-public class EndRoundApi extends AsyncTask<String, String, Boolean> {
+public class CourseSearchApi extends AsyncTask<String, String, Boolean> {
 
     private String API_RESULT;
+    CourseSearchApi.Delegate delegate;
 
-    public EndRoundApi(String round) {
+    public CourseSearchApi(CourseSearchApi.Delegate delegate) {
 
-        String[] params = {"round"};
-
-        String API_URL = HOST + ENDROUND;
-        API_URL += params[0] + "=" + round;
+        this.delegate = delegate;
+        String API_URL = HOST + COURSESEARCH;
 
         execute(API_URL);
     }
@@ -38,11 +37,11 @@ public class EndRoundApi extends AsyncTask<String, String, Boolean> {
         super.onPostExecute(result);
 
         if (result)
-            Log.i(getClass().toString(), API_RESULT);
+            delegate.allCourses(API_RESULT);
 
     }
 
     public interface Delegate   {
-        void endRound(String json);
+        void allCourses(String json);
     }
 }

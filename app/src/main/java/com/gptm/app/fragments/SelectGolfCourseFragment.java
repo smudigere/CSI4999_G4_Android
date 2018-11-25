@@ -1,10 +1,12 @@
 package com.gptm.app.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +14,22 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.gptm.app.R;
-import com.gptm.app.controller.SelectGolfCourseFragmentController;
+import com.gptm.app.api.CourseSearchApi;
 import com.gptm.app.utility.Functions;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class SelectGolfCourseFragment extends Fragment implements
-        AdapterView.OnItemSelectedListener{
+        AdapterView.OnItemSelectedListener,
+        CourseSearchApi.Delegate{
 
     public static SelectGolfCourseFragment newInstance()    {
 
@@ -29,6 +37,8 @@ public class SelectGolfCourseFragment extends Fragment implements
 
         return fragment;
     }
+
+    List<String> places, placesId;
 
     private View mView;
 
@@ -53,7 +63,7 @@ public class SelectGolfCourseFragment extends Fragment implements
         init_button();
         init_spinner();
 
-        new SelectGolfCourseFragmentController(mActivity, mSpinner);
+        new CourseSearchApi(this);
     }
 
     private void init_button() {
@@ -82,11 +92,43 @@ public class SelectGolfCourseFragment extends Fragment implements
         mSpinner.setOnItemSelectedListener(this);
     }
 
+
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+        Functions.selectCourseId(Integer.parseInt(placesId.get(i)));
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {}
+
+    @Override
+    public void allCourses(String json) {
+        try {
+
+            JSONArray courseArray = new JSONObject(json).getJSONArray("results");
+            places = new ArrayList<>();
+            placesId = new ArrayList<>();
+
+            Functions.setCourseIdNameMap(courseArray);
+            HashMap<String, String> courseIdNameMap = Functions.getCourseIdNameMap();
+
+            for (String courseName: courseIdNameMap.keySet()) {
+                places.add(courseIdNameMap.get(courseName));
+                placesId.add(courseName);
+            }
+
+            Log.i("Places", places.toString());
+            Log.i("PlacesId", placesId.toString());
+
+            // Creating adapter for spinner
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(mActivity, android.R.layout.simple_spinner_item, places);
+
+            // Drop down layout style - list view with radio button
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            // attaching data adapter to spinner
+            mSpinner.setAdapter(dataAdapter);
+
+        } catch (Exception ignored) {}
+    }
 }
