@@ -6,14 +6,18 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.gptm.app.api.StartRoundApi;
 import com.gptm.app.controller.HoleCount;
 import com.gptm.app.fragments.EnterHoleScoreFragment;
 import com.gptm.app.model.Player;
 import com.gptm.app.utility.Functions;
 
-public class EnterScoreActivity extends AppCompatActivity   {
+public class EnterScoreActivity extends AppCompatActivity implements
+        StartRoundApi.Delegate{
 
     private int holeCount;
 
@@ -28,6 +32,7 @@ public class EnterScoreActivity extends AppCompatActivity   {
 
         try {
 
+            //new StartRoundApi(this, )
             holeCount = HoleCount.getInstance().getHoleCount();
 
             players = Functions.getPlayers(this);
@@ -35,7 +40,7 @@ public class EnterScoreActivity extends AppCompatActivity   {
             fragments = new EnterHoleScoreFragment[holeCount];
 
             for (int i = 0; i < holeCount; i++)
-                fragments[i] = EnterHoleScoreFragment.newInstance(i, holeCount);
+                fragments[i] = EnterHoleScoreFragment.newInstance(i);
 
             addEnterHoleScoreFragment(0);
 
@@ -70,7 +75,8 @@ public class EnterScoreActivity extends AppCompatActivity   {
         switch (item.getItemId())   {
             case R.id.item1:        //Score Card
 
-                Intent mIntent = new Intent(this, ScoreActivity.class);
+                //Intent mIntent = new Intent(this, ScoreActivity.class);
+                Intent mIntent = new Intent(this, GridScoreActivity.class);
                 startActivity(mIntent);
 
                 break;
@@ -84,5 +90,10 @@ public class EnterScoreActivity extends AppCompatActivity   {
 
     public Player[] getPlayers() {
         return players;
+    }
+
+    @Override
+    public void startRound(String data) {
+
     }
 }

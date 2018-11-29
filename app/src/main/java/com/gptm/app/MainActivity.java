@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements
         final Spinner sp = new Spinner(MainActivity.this);
         sp.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         sp.setAdapter(adp);
-
+        //startActivity(new Intent(this, GridScoreActivity.class));
         //setTitle(null); //Required to hide the App Name from showing up on the toolbar.
     }
 

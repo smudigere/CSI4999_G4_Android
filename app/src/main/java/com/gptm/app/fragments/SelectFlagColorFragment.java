@@ -12,18 +12,23 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.gptm.app.R;
+import com.gptm.app.api.CourseInfoApi;
 import com.gptm.app.controller.SelectFlagColorController;
+import com.gptm.app.model.CourseInfo;
 import com.gptm.app.model.Player;
 import com.gptm.app.utility.Functions;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.gptm.app.utility.Functions.mCourseInfo;
 
 public class SelectFlagColorFragment extends Fragment implements
-        AdapterView.OnItemSelectedListener{
+        AdapterView.OnItemSelectedListener,
+        CourseInfoApi.Delegate{
 
     public static SelectFlagColorFragment newInstance()    {
 
@@ -59,6 +64,7 @@ public class SelectFlagColorFragment extends Fragment implements
         init_button();
         init_spinner();
 
+        new CourseInfoApi(this, Functions.getSelectedCourseId());
     }
 
     private void init_button() {
@@ -81,18 +87,19 @@ public class SelectFlagColorFragment extends Fragment implements
 
         // Spinner click listener
         mSpinner.setOnItemSelectedListener(this);
-        init_spinner_adapter();
+        //init_spinner_adapter();
     }
 
-    private void init_spinner_adapter() {
+    private void init_spinner_adapter(List<String> flags) {
         try {
 
+            /*
             // Spinner Drop down elements
             List<String> flags = new ArrayList<>();
             flags.add("BLACK - 7002 Y");
             flags.add("GOLD - 6386 Y");
             flags.add("WHITE - 5891 Y");
-            flags.add("RED - 4941 Y");
+            flags.add("RED - 4941 Y");*/
 
             // Creating adapter for spinner
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(mActivity, android.R.layout.simple_spinner_item, flags);
@@ -107,10 +114,27 @@ public class SelectFlagColorFragment extends Fragment implements
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+        mCourseInfo.setmSelectedTee(position);
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {}
+
+    @Override
+    public void courseInfo(String json) {
+        try {
+
+            mCourseInfo = new CourseInfo(json);
+
+            // Spinner Drop down elements
+            List<String> flags = new ArrayList<>();
+            flags.add("RED - "+ mCourseInfo.getmTotalRed() + " Y");
+            flags.add("GOLD - "+ mCourseInfo.getmTotalGold() + " Y");
+            flags.add("BLACK - "+ mCourseInfo.getmTotalBlack() + " Y");
+            flags.add("WHITE - "+ mCourseInfo.getmTotalWhite() + " Y");
+
+            init_spinner_adapter(flags);
+        } catch (Exception ignored) {}
+    }
 }

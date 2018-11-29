@@ -1,5 +1,6 @@
 package com.gptm.app.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,16 +8,19 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.gptm.app.EnterScoreActivity;
+import com.gptm.app.GridScoreActivity;
 import com.gptm.app.R;
 import com.gptm.app.controller.EnterScoreRecyclerAdapter;
+import com.gptm.app.controller.HoleCount;
 import com.gptm.app.controller.ScoreTrackMap;
 
 import org.json.JSONException;
@@ -24,19 +28,20 @@ import org.json.JSONObject;
 
 import java.util.concurrent.TimeUnit;
 
+import static com.gptm.app.utility.Functions.mCourseInfo;
+
 public class EnterHoleScoreFragment extends Fragment implements
         View.OnClickListener    {
 
-    public static EnterHoleScoreFragment newInstance(int holeNumber, int totalHoleCount) {
+    public static EnterHoleScoreFragment newInstance(int holeNumber) {
 
         EnterHoleScoreFragment fragment = new EnterHoleScoreFragment();
         fragment.holeNumber = holeNumber + 1;
-        fragment.totalHoleCount = totalHoleCount;
 
         return fragment;
     }
 
-    private int holeNumber, totalHoleCount, clickCounter;
+    private int holeNumber;
 
     private EnterScoreActivity mActivity;
     private EnterScoreRecyclerAdapter adapter;
@@ -58,7 +63,6 @@ public class EnterHoleScoreFragment extends Fragment implements
         mActivity = (EnterScoreActivity) getActivity();
         mView = view;
 
-        clickCounter = 0;
         jsonObjects = new JSONObject[3];
         try {
             jsonObjects[0] = new JSONObject("{\"playing\":3,\"waiting\":2,\"esttime\":350}");
@@ -68,6 +72,21 @@ public class EnterHoleScoreFragment extends Fragment implements
             e.printStackTrace();
         }
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        /*
+        try {
+
+            builder.setTitle("")
+                    .setMessage("Other rounds waiting in line. Please move faster!")
+                    .show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+
+        Glide.with(this).load("https://wallpapercave.com/wp/eOZbIG4.jpg").into((ImageView) view.findViewById(R.id.image_view));
+
         init_ui();
     }
 
@@ -76,25 +95,17 @@ public class EnterHoleScoreFragment extends Fragment implements
         TextView mHoleNumTextView = mView.findViewById(R.id.hole_num_text_view);
         mHoleNumTextView.setText("Hole " + holeNumber);
 
-        String[] parText = {
-                "Par 4",
-                "Par 3",
-                "Par 4",
-                "Par 4",
-                "Par 4"
-        };
         TextView mParNumTextView = mView.findViewById(R.id.par_num_text_view);
-        mParNumTextView.setText(parText[holeNumber - 1]);
+        mParNumTextView.setText("Par " +
+                String.valueOf(mCourseInfo.getmHoles()[holeNumber - 1].getmPar())
+        );
 
-        String[] yardText = {
-                "376 Yards",
-                "130 Yards",
-                "279 Yards",
-                "324 Yards",
-                "325 Yards"
-        };
         TextView mYardNumTextView = mView.findViewById(R.id.yard_num_text_view);
-        mYardNumTextView.setText(yardText[holeNumber - 1]);
+        mYardNumTextView.setText(
+                String.valueOf(
+                        mCourseInfo.getmHoles()[holeNumber - 1].getDistance(mCourseInfo.getmSelectedTee())
+                ) + " Yards"
+        );
 
         RecyclerView mRecylerView = mView.findViewById(R.id.recylerView);
 
@@ -111,36 +122,28 @@ public class EnterHoleScoreFragment extends Fragment implements
         mRecylerView.setAdapter(adapter);
 
         Button mNextButton = mView.findViewById(R.id.next_button);
+
+        if (holeNumber == HoleCount.getInstance().getHoleCount())
+            mNextButton.setText("End Game");
+
         mNextButton.setOnClickListener(this);
     }
+
 
     @Override
     public void onClick(View view) {
 
         switch (view.getId()) {
             case R.id.next_button:
+                ScoreTrackMap.getInstance().getmScoreMapList().add(holeNumber - 1, adapter.getmScoreMap());
 
-                if (holeNumber == 2)    {
+                if (holeNumber == HoleCount.getInstance().getHoleCount()) {
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    Intent mIntent = new Intent(mActivity, GridScoreActivity.class);
+                    startActivity(mIntent);
 
-                    try {
-                        long waitTime = TimeUnit.SECONDS.toMinutes(Long.parseLong(jsonObjects[clickCounter].getString("esttime")));
-
-                        builder.setTitle("Estimated Wait Time")
-                                .setMessage("There are " + jsonObjects[clickCounter].getString("waiting") + " rounds playing ahead of you.\nYour estimated" +
-                                        " wait time is " + waitTime + " minutes.")
-                                .show();
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    clickCounter++;
-                } else {
-                    ScoreTrackMap.getInstance().getmScoreMapList().add(holeNumber - 1, adapter.getmScoreMap());
+                } else
                     mActivity.addEnterHoleScoreFragment(holeNumber);
-                }
 
                 break;
         }

@@ -25,6 +25,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 public class SelectGolfCourseFragment extends Fragment implements
@@ -103,22 +104,30 @@ public class SelectGolfCourseFragment extends Fragment implements
 
     @Override
     public void allCourses(String json) {
+
         try {
 
-            JSONArray courseArray = new JSONObject(json).getJSONArray("results");
+            JSONObject courseArray = new JSONObject(json);
             places = new ArrayList<>();
             placesId = new ArrayList<>();
 
-            Functions.setCourseIdNameMap(courseArray);
-            HashMap<String, String> courseIdNameMap = Functions.getCourseIdNameMap();
+            HashMap<String, String> courseIdNameMap = new HashMap<>();
 
-            for (String courseName: courseIdNameMap.keySet()) {
-                places.add(courseIdNameMap.get(courseName));
-                placesId.add(courseName);
+            for (Iterator<String> it = courseArray.keys(); it.hasNext(); ) {
+                String id = it.next();
+
+                if (courseArray.getString(id).length() != 0) {
+
+                    placesId.add(id);
+                    places.add(courseArray.getString(id));
+
+                    courseIdNameMap.put(id, courseArray.getString(id));
+
+                    Log.i(id, courseArray.getString(id));
+                }
             }
 
-            Log.i("Places", places.toString());
-            Log.i("PlacesId", placesId.toString());
+            Functions.setCourseIdNameMap(courseIdNameMap);
 
             // Creating adapter for spinner
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(mActivity, android.R.layout.simple_spinner_item, places);
@@ -129,6 +138,8 @@ public class SelectGolfCourseFragment extends Fragment implements
             // attaching data adapter to spinner
             mSpinner.setAdapter(dataAdapter);
 
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+            ignored.printStackTrace();
+        }
     }
 }

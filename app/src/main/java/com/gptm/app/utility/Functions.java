@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.gptm.app.R;
 import com.gptm.app.controller.PlayersSql;
+import com.gptm.app.model.CourseInfo;
 import com.gptm.app.model.Player;
 
 import org.json.JSONArray;
@@ -20,21 +21,13 @@ import java.util.HashMap;
  */
 public final class Functions {
 
+    public static CourseInfo mCourseInfo;
+
     private static HashMap<String, String> courseIdNameMap;
     private static int selectedCourseId;
 
-    public static void setCourseIdNameMap(JSONArray courseArray) {
-
-        try {
-
-            courseIdNameMap = new HashMap<>();
-
-            for (int i = 0; i < courseArray.length(); i++)
-                courseIdNameMap.put(
-                        courseArray.getJSONArray(i).get(0).toString(),
-                        courseArray.getJSONArray(i).get(1).toString()
-                );
-        } catch (Exception ignored) {}
+    public static void setCourseIdNameMap(HashMap<String, String> cINMap) {
+        Functions.courseIdNameMap = cINMap;
     }
 
     public static HashMap<String, String> getCourseIdNameMap()  {

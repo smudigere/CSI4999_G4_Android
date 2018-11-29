@@ -23,9 +23,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
-        <activity android:name=".EnterScoreActivity" />
+        <activity android:name=".EnterScoreActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".ScoreActivity" />
-        <activity android:name=".ViewGolfCourseActivity"></activity>
+        <activity android:name=".ViewGolfCourseActivity" />
+        <activity android:name=".GridScoreActivity"
+            android:screenOrientation="landscape"/>
     </application>
 
 </manifest>

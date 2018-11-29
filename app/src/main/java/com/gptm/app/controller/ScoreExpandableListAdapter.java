@@ -112,7 +112,6 @@ public class ScoreExpandableListAdapter extends BaseExpandableListAdapter {
         try {
 
             TextView mShotsTextView = convertView.findViewById(R.id.shots_text_view);
-            Log.i("ADAPTERRRRR", ScoreTrackMap.getInstance().getmScoreMapList().get(groupPosition).get(childPosition).toString());
             mShotsTextView.setText(ScoreTrackMap.getInstance().getmScoreMapList().get(groupPosition).get(childPosition).toString());
 
         } catch (Exception ignored) {

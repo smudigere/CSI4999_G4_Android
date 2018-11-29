@@ -2,28 +2,49 @@ package com.gptm.app.model;
 
 public class Hole {
 
-    private String mLabel;
-    private int mStrokeCount;
-
-    public Hole(String label, int strokeCount){
-        mLabel = label;
-        mStrokeCount = strokeCount;
+    public int getmPar() {
+        return mPar;
     }
 
-
-    public String getmLabel() {
-        return mLabel;
+    public int getmRedTee() {
+        return mRedTee;
     }
 
-    public void setmLabel(String mLabel) {
-        this.mLabel = mLabel;
+    public int getmGoldTee() {
+        return mGoldTee;
     }
 
-    public int getmStrokeCount() {
-        return mStrokeCount;
+    public int getmBlackTee() {
+        return mBlackTee;
     }
 
-    public void setmStrokeCount(int mStrokeCount) {
-        this.mStrokeCount = mStrokeCount;
+    public int getmWhiteTee() {
+        return mWhiteTee;
+    }
+
+    public int getDistance(int mSelectedTee) {
+
+        switch (mSelectedTee)   {
+            case 0:
+            default:
+                return getmRedTee();
+            case 1:
+                return getmGoldTee();
+            case 2:
+                return getmBlackTee();
+            case 3:
+                return getmWhiteTee();
+        }
+    }
+
+    private int mPar, mRedTee, mGoldTee, mBlackTee, mWhiteTee;
+
+
+    public Hole(int mPar, int mRedTee, int mGoldTee, int mBlackTee, int mWhiteTee)  {
+        this.mPar = mPar;
+        this.mRedTee = mRedTee;
+        this.mGoldTee = mGoldTee;
+        this.mBlackTee = mBlackTee;
+        this.mWhiteTee = mWhiteTee;
     }
 }
