@@ -8,10 +8,19 @@
     android:layout_weight="1"
     >
 
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2"
+        android:id="@+id/profile_image_view"
+        android:src="@drawable/fa_user"
+        android:padding="4dp"
+        />
+
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5"
+        android:layout_weight="0.4"
         android:id="@+id/player_text_view"
         android:gravity="center"
         android:textSize="18sp"
@@ -20,7 +29,7 @@
     <EditText
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5"
+        android:layout_weight="0.4"
         android:id="@+id/player_edit_text"
         android:inputType="textPersonName"
         tools:ignore="LabelFor"

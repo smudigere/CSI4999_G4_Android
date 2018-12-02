@@ -11,8 +11,11 @@ import static com.gptm.app.api.HostInformation.ENDROUND;
 public class EndRoundApi extends AsyncTask<String, String, Boolean> {
 
     private String API_RESULT;
+    private Delegate delegate;
 
-    public EndRoundApi(String round) {
+    public EndRoundApi(Delegate delegate, int round) {
+
+        this.delegate = delegate;
 
         String[] params = {"round"};
 
@@ -38,7 +41,7 @@ public class EndRoundApi extends AsyncTask<String, String, Boolean> {
         super.onPostExecute(result);
 
         if (result)
-            Log.i(getClass().toString(), API_RESULT);
+            delegate.endRound(API_RESULT);
 
     }
 

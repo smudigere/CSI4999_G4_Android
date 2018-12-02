@@ -2,25 +2,31 @@ package com.gptm.app.api;
 
 import android.os.AsyncTask;
 
-import com.gptm.app.utility.Functions;
 import com.gptm.app.utility.HttpConnection;
 
 import static com.gptm.app.api.HostInformation.HOST;
 import static com.gptm.app.api.HostInformation.STARTROUND;
+import static com.gptm.app.api.HostInformation.TIMESTAMP;
 
 
-public class StartRoundApi extends AsyncTask<String, String, Boolean> {
+public class TimestampApi extends AsyncTask<String, String, Boolean> {
 
     private String API_RESULT;
     private Delegate delegate;
 
-    public StartRoundApi(StartRoundApi.Delegate delegate, int course, int playerCount) {
+    public TimestampApi(TimestampApi.Delegate delegate, int round, int hole, boolean event) {
 
         this.delegate = delegate;
-        String[] params = {"course"};
+        String[] params = {"round", "hole", "event"};
 
-        String API_URL = HOST + STARTROUND;
-        API_URL += params[0] + "=" + course;
+        String API_URL = HOST + TIMESTAMP;
+        API_URL += params[0] + "=" + round + "&";
+        API_URL += params[1] + "=" + hole + "&";
+
+        if (event)
+            API_URL += params[2] + "=" + "start";
+        else
+            API_URL += params[2] + "=" + "end";
 
         execute(API_URL);
     }
@@ -41,11 +47,11 @@ public class StartRoundApi extends AsyncTask<String, String, Boolean> {
         super.onPostExecute(result);
 
         if (result)
-            delegate.startRound(API_RESULT);
+            delegate.updateProgress(API_RESULT);
 
     }
 
     public interface Delegate   {
-        void startRound(String data);
+        void updateProgress(String data);
     }
 }

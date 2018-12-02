@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "977567515654",
+    "firebase_url": "https://gptm-21dbd.firebaseio.com",
+    "project_id": "gptm-21dbd",
+    "storage_bucket": "gptm-21dbd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:977567515654:android:263967cc73250390",
+        "android_client_info": {
+          "package_name": "com.gptm.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "977567515654-lkfvvbknaioa13landh5nkhv03sc7vlh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOt0teABuIXjuyCA7oojtyPZvm6Dft17E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

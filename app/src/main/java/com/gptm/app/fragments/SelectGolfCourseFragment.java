@@ -107,6 +107,40 @@ public class SelectGolfCourseFragment extends Fragment implements
 
         try {
 
+
+            JSONArray courseArray = new JSONObject(json).getJSONArray("results");
+
+            places = new ArrayList<>();
+            placesId = new ArrayList<>();
+
+            HashMap<String, String> courseIdNameMap = new HashMap<>();
+
+            for (int i = 0; i < courseArray.length(); i++)  {
+
+                if (courseArray.getJSONArray(i).getString(1).length() != 0) {
+                    placesId.add(courseArray.getJSONArray(i).getString(0));
+                    places.add(courseArray.getJSONArray(i).getString(1));
+
+                    courseIdNameMap.put(courseArray.getJSONArray(i).getString(0),
+                            courseArray.getJSONArray(i).getString(1));
+                }
+            }
+
+            Functions.setCourseIdNameMap(courseIdNameMap);
+
+            // Creating adapter for spinner
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(mActivity, android.R.layout.simple_spinner_item, places);
+
+            // Drop down layout style - list view with radio button
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            // attaching data adapter to spinner
+            mSpinner.setAdapter(dataAdapter);
+
+        } catch (Exception ignored) {}
+/*
+        try {
+
             JSONObject courseArray = new JSONObject(json);
             places = new ArrayList<>();
             placesId = new ArrayList<>();
@@ -138,8 +172,7 @@ public class SelectGolfCourseFragment extends Fragment implements
             // attaching data adapter to spinner
             mSpinner.setAdapter(dataAdapter);
 
-        } catch (Exception ignored) {
-            ignored.printStackTrace();
-        }
+        } catch (Exception ignored) {}
+        */
     }
 }

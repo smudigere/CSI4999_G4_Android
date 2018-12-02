@@ -36,4 +36,6 @@
     <string name="Select_the_closest_golf_course_c">Select the closest golf course:</string>
     <string name="Select_Flag_Color_c">Select Flag Color:</string>
 
+    <string name="fa_flag">&#xf024;</string>
+
 </resources>

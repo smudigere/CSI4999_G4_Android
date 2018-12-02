@@ -20,11 +20,35 @@
         android:layout_height="wrap_content"
         android:id="@+id/course_info_text_view"
         android:textSize="16sp"
+        android:paddingStart="12dp"
+        android:paddingEnd="0dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/course_tee_text_view"
+        android:textSize="16sp"
+        android:layout_below="@+id/course_info_text_view"
+        android:paddingStart="12dp"
+        android:paddingEnd="0dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recylerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/course_tee_text_view"
         />
 
     <GridView
+        android:visibility="invisible"
         android:layout_marginTop="6dp"
-        android:layout_below="@+id/course_info_text_view"
+        android:layout_below="@+id/course_tee_text_view"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/gridview"
         android:layout_width="match_parent"
@@ -32,7 +56,7 @@
         android:numColumns="12"
         android:stretchMode="columnWidth"
         android:gravity="center"
-        android:horizontalSpacing="1dp"
+        android:horizontalSpacing="0.5dp"
         android:verticalSpacing="1dp"
         />
 

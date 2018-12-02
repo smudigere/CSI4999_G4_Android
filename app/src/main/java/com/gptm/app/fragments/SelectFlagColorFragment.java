@@ -1,10 +1,14 @@
 package com.gptm.app.fragments;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gptm.app.R;
@@ -19,6 +24,8 @@ import com.gptm.app.api.CourseInfoApi;
 import com.gptm.app.controller.SelectFlagColorController;
 import com.gptm.app.model.CourseInfo;
 import com.gptm.app.model.Player;
+import com.gptm.app.utility.CustomTypefaceSpan;
+import com.gptm.app.utility.FontManager;
 import com.gptm.app.utility.Functions;
 
 import java.util.ArrayList;
@@ -93,14 +100,6 @@ public class SelectFlagColorFragment extends Fragment implements
     private void init_spinner_adapter(List<String> flags) {
         try {
 
-            /*
-            // Spinner Drop down elements
-            List<String> flags = new ArrayList<>();
-            flags.add("BLACK - 7002 Y");
-            flags.add("GOLD - 6386 Y");
-            flags.add("WHITE - 5891 Y");
-            flags.add("RED - 4941 Y");*/
-
             // Creating adapter for spinner
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(mActivity, android.R.layout.simple_spinner_item, flags);
 
@@ -110,7 +109,9 @@ public class SelectFlagColorFragment extends Fragment implements
             // attaching data adapter to spinner
             mSpinner.setAdapter(dataAdapter);
 
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+            ignored.printStackTrace();
+        }
     }
 
     @Override

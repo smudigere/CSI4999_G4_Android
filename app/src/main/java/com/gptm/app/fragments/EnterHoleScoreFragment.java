@@ -1,6 +1,7 @@
 package com.gptm.app.fragments;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,19 +21,25 @@ import com.bumptech.glide.Glide;
 import com.gptm.app.EnterScoreActivity;
 import com.gptm.app.GridScoreActivity;
 import com.gptm.app.R;
+import com.gptm.app.api.EndRoundApi;
+import com.gptm.app.api.TimestampApi;
+import com.gptm.app.api.WaitTimeApi;
 import com.gptm.app.controller.EnterScoreRecyclerAdapter;
 import com.gptm.app.controller.HoleCount;
 import com.gptm.app.controller.ScoreTrackMap;
+import com.gptm.app.utility.FontManager;
+import com.gptm.app.utility.Functions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.concurrent.TimeUnit;
-
 import static com.gptm.app.utility.Functions.mCourseInfo;
 
 public class EnterHoleScoreFragment extends Fragment implements
-        View.OnClickListener    {
+        View.OnClickListener,
+        WaitTimeApi.Delegate,
+        EndRoundApi.Delegate,
+        TimestampApi.Delegate{
 
     public static EnterHoleScoreFragment newInstance(int holeNumber) {
 
@@ -48,8 +56,6 @@ public class EnterHoleScoreFragment extends Fragment implements
 
     private View mView;
 
-    private JSONObject[] jsonObjects;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -60,17 +66,12 @@ public class EnterHoleScoreFragment extends Fragment implements
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        new TimestampApi(this, Functions.roundId, holeNumber, true);
+
         mActivity = (EnterScoreActivity) getActivity();
         mView = view;
 
-        jsonObjects = new JSONObject[3];
-        try {
-            jsonObjects[0] = new JSONObject("{\"playing\":3,\"waiting\":2,\"esttime\":350}");
-            jsonObjects[1] = new JSONObject("{\"playing\":3,\"waiting\":2,\"esttime\":340}");
-            jsonObjects[2] = new JSONObject("{\"playing\":3,\"waiting\":1,\"esttime\":240}");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        Typeface iconFont = FontManager.getTypeface(mActivity, FontManager.FONTAWESOME);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -137,15 +138,45 @@ public class EnterHoleScoreFragment extends Fragment implements
             case R.id.next_button:
                 ScoreTrackMap.getInstance().getmScoreMapList().add(holeNumber - 1, adapter.getmScoreMap());
 
+                new TimestampApi(this, Functions.roundId, holeNumber - 1, false);
+
                 if (holeNumber == HoleCount.getInstance().getHoleCount()) {
 
                     Intent mIntent = new Intent(mActivity, GridScoreActivity.class);
                     startActivity(mIntent);
 
+                    new EndRoundApi(this, Functions.roundId);
                 } else
                     mActivity.addEnterHoleScoreFragment(holeNumber);
 
                 break;
         }
+    }
+
+    @Override
+    public void waitTime(String json) {
+        try {
+
+            Log.i(getClass().toString(), json);
+
+        } catch (Exception ignored) {}
+    }
+
+    @Override
+    public void endRound(String json) {
+        try {
+
+            Log.i(getClass().toString(), json);
+
+        } catch (Exception ignored) {}
+    }
+
+    @Override
+    public void updateProgress(String data) {
+        try {
+
+            Log.i(getClass().toString(), data);
+
+        } catch (Exception ignored) {}
     }
 }

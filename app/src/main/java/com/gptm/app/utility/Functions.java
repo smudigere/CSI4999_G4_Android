@@ -25,6 +25,7 @@ public final class Functions {
 
     private static HashMap<String, String> courseIdNameMap;
     private static int selectedCourseId;
+    public static int roundId;
 
     public static void setCourseIdNameMap(HashMap<String, String> cINMap) {
         Functions.courseIdNameMap = cINMap;

@@ -9,4 +9,5 @@ class HostInformation {
     static String UPDATEPROGRESS = "core/timestamp.php?";
     static String COURSESEARCH = "core/coursesearch.php";
     static String COURSEINFO = "core/courseinfo.php?";
+    static String TIMESTAMP = "core/timestamp.php?";
 }

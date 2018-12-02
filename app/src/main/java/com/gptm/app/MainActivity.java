@@ -17,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.common.util.CrashUtils;
 import com.gptm.app.api.StartRoundApi;
 import com.gptm.app.api.WaitTimeApi;
 import com.gptm.app.fragments.EnterNamesFragment;
@@ -68,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements
         sp.setAdapter(adp);
         //startActivity(new Intent(this, GridScoreActivity.class));
         //setTitle(null); //Required to hide the App Name from showing up on the toolbar.
+
+        //Crashlytics.getInstance().crash();
     }
 
     @Override

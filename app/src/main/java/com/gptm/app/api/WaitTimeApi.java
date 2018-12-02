@@ -11,8 +11,11 @@ import static com.gptm.app.api.HostInformation.WAITTIME;
 public class WaitTimeApi extends AsyncTask<String, String, Boolean> {
 
     private String API_RESULT;
+    private Delegate delegate;
 
-    public WaitTimeApi(String round, String hole) {
+    public WaitTimeApi(Delegate delegate, String round, String hole) {
+
+        this.delegate = delegate;
 
         String[] params = {"round", "hole"};
 
@@ -39,11 +42,11 @@ public class WaitTimeApi extends AsyncTask<String, String, Boolean> {
         super.onPostExecute(result);
 
         if (result)
-            Log.i(getClass().toString(), API_RESULT);
+            delegate.waitTime(API_RESULT);
 
     }
 
     public interface Delegate   {
-        void waitTime();
+        void waitTime(String json);
     }
 }

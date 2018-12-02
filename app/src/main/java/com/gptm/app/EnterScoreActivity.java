@@ -3,6 +3,7 @@ package com.gptm.app;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,6 +16,8 @@ import com.gptm.app.controller.HoleCount;
 import com.gptm.app.fragments.EnterHoleScoreFragment;
 import com.gptm.app.model.Player;
 import com.gptm.app.utility.Functions;
+
+import org.json.JSONObject;
 
 public class EnterScoreActivity extends AppCompatActivity implements
         StartRoundApi.Delegate{
@@ -32,11 +35,10 @@ public class EnterScoreActivity extends AppCompatActivity implements
 
         try {
 
-            //new StartRoundApi(this, )
             holeCount = HoleCount.getInstance().getHoleCount();
 
             players = Functions.getPlayers(this);
-
+            new StartRoundApi(this, Functions.getSelectedCourseId(), players.length);
             fragments = new EnterHoleScoreFragment[holeCount];
 
             for (int i = 0; i < holeCount; i++)
@@ -94,6 +96,12 @@ public class EnterScoreActivity extends AppCompatActivity implements
 
     @Override
     public void startRound(String data) {
+        try {
 
+            Log.i(getClass().toString(), data);
+
+            Functions.roundId = new JSONObject(data).getInt("round");
+
+        } catch (Exception ignored) {}
     }
 }
