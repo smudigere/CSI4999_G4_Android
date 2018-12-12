@@ -41,11 +41,6 @@ public class EnterScoreActivity extends AppCompatActivity implements
             new StartRoundApi(this, Functions.getSelectedCourseId(), players.length);
             fragments = new EnterHoleScoreFragment[holeCount];
 
-            for (int i = 0; i < holeCount; i++)
-                fragments[i] = EnterHoleScoreFragment.newInstance(i);
-
-            addEnterHoleScoreFragment(0);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -97,10 +92,12 @@ public class EnterScoreActivity extends AppCompatActivity implements
     @Override
     public void startRound(String data) {
         try {
-
-            Log.i(getClass().toString(), data);
-
             Functions.roundId = new JSONObject(data).getInt("round");
+
+            for (int i = 0; i < holeCount; i++)
+                fragments[i] = EnterHoleScoreFragment.newInstance(i);
+
+            addEnterHoleScoreFragment(0);
 
         } catch (Exception ignored) {}
     }

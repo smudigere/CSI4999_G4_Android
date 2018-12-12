@@ -13,7 +13,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:text="@string/Select_the_number_of_players_c"
-        android:textSize="18sp"
+        android:textSize="20sp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
         />
 
     <Spinner
@@ -27,12 +29,20 @@
 
     <Button
         android:id="@+id/submit_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="198dp"
-        android:text="@string/Submit"
+        android:text= "@string/Submit"
+        android:layout_below="@+id/play_button"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/tutorial_button"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:fontFamily="sans-serif-condensed"
+        android:textStyle="bold"
+        android:backgroundTint="#477D99"
         />
 
 </RelativeLayout>

@@ -17,6 +17,13 @@
         android:id="@+id/drawer_layout"
         >
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/background_image_view"
+            android:scaleType="centerCrop"
+            />
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

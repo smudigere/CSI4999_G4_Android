@@ -7,13 +7,24 @@
     android:background="@android:color/white"
     >
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/background_image_view"
+        android:scaleType="centerCrop"
+        />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="@string/Eagle"
-        android:textColor="@android:color/black"
-        android:textSize="22sp"
+        android:textColor="@android:color/white"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:background="@drawable/tutorial_button"
+        android:padding="16dp"
         />
 
 </RelativeLayout>

@@ -17,10 +17,11 @@ public class StartRoundApi extends AsyncTask<String, String, Boolean> {
     public StartRoundApi(StartRoundApi.Delegate delegate, int course, int playerCount) {
 
         this.delegate = delegate;
-        String[] params = {"course"};
+        String[] params = {"course", "players"};
 
         String API_URL = HOST + STARTROUND;
-        API_URL += params[0] + "=" + course;
+        API_URL += params[0] + "=" + course + "&";
+        API_URL += params[1] + "=" + playerCount;
 
         execute(API_URL);
     }
@@ -29,7 +30,7 @@ public class StartRoundApi extends AsyncTask<String, String, Boolean> {
     protected Boolean doInBackground(String... params) {
         try {
 
-            API_RESULT = HttpConnection.httpGetConnection(params[0]);
+            API_RESULT = HttpConnection.httpConnection(params[0]);
 
             return true;
         } catch (Exception ignored) {}

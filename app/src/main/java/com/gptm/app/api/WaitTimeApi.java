@@ -13,7 +13,7 @@ public class WaitTimeApi extends AsyncTask<String, String, Boolean> {
     private String API_RESULT;
     private Delegate delegate;
 
-    public WaitTimeApi(Delegate delegate, String round, String hole) {
+    public WaitTimeApi(Delegate delegate, int round, int hole) {
 
         this.delegate = delegate;
 

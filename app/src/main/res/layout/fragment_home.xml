@@ -11,14 +11,35 @@
 
     <Button
         android:id="@+id/play_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="212dp"
         android:text="@string/Play"
-        tools:layout_editor_absoluteX="147dp"
-        tools:layout_editor_absoluteY="246dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/tutorial_button"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:fontFamily="sans-serif-condensed"
+        android:textStyle="bold"
+        />
+
+    <Button
+        android:id="@+id/about_us_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text= "About Us"
+        android:layout_below="@+id/play_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/tutorial_button"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:fontFamily="sans-serif-condensed"
+        android:textStyle="bold"
+        android:backgroundTint="#477D99"
         />
 
 </RelativeLayout>

@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.Objects;
 
@@ -29,6 +32,9 @@ public class SplashActivity extends AppCompatActivity {
 
             setContentView(R.layout.activity_splash);
 
+            Glide.with(this)
+                    .load("https://images5.alphacoders.com/671/671148.jpg")
+                    .into((ImageView) findViewById(R.id.background_image_view));
             // Start timer and launch main activity
             IntentLauncher launcher = new IntentLauncher();
             launcher.start();
@@ -47,7 +53,7 @@ public class SplashActivity extends AppCompatActivity {
         public void run() {
             try {
                 // Sleeping
-                long SLEEP_TIME = 1;
+                long SLEEP_TIME = 3;
                 Thread.sleep(SLEEP_TIME *1000);
             } catch (Exception ignored) {}
 

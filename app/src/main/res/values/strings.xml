@@ -26,6 +26,8 @@
     <string name="Email_s">Email*</string>
     <string name="Phone_Number_s">Phone Number*</string>
 
+    <string name="Try_Again">Try Again</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 

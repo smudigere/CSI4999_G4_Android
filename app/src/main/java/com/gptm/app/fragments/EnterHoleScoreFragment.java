@@ -1,7 +1,7 @@
 package com.gptm.app.fragments;
 
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.gptm.app.EnterScoreActivity;
@@ -27,10 +28,8 @@ import com.gptm.app.api.WaitTimeApi;
 import com.gptm.app.controller.EnterScoreRecyclerAdapter;
 import com.gptm.app.controller.HoleCount;
 import com.gptm.app.controller.ScoreTrackMap;
-import com.gptm.app.utility.FontManager;
 import com.gptm.app.utility.Functions;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import static com.gptm.app.utility.Functions.mCourseInfo;
@@ -39,7 +38,7 @@ public class EnterHoleScoreFragment extends Fragment implements
         View.OnClickListener,
         WaitTimeApi.Delegate,
         EndRoundApi.Delegate,
-        TimestampApi.Delegate{
+        TimestampApi.Delegate, DialogInterface.OnDismissListener, DialogInterface.OnShowListener {
 
     public static EnterHoleScoreFragment newInstance(int holeNumber) {
 
@@ -56,6 +55,9 @@ public class EnterHoleScoreFragment extends Fragment implements
 
     private View mView;
 
+    private AlertDialog dialog;
+    private boolean shouldDialogDismiss;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,29 +68,15 @@ public class EnterHoleScoreFragment extends Fragment implements
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        new TimestampApi(this, Functions.roundId, holeNumber, true);
+        new WaitTimeApi(this, Functions.roundId, holeNumber - 1);
 
         mActivity = (EnterScoreActivity) getActivity();
         mView = view;
 
-        Typeface iconFont = FontManager.getTypeface(mActivity, FontManager.FONTAWESOME);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-        /*
-        try {
-
-            builder.setTitle("")
-                    .setMessage("Other rounds waiting in line. Please move faster!")
-                    .show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
-
         Glide.with(this).load("https://wallpapercave.com/wp/eOZbIG4.jpg").into((ImageView) view.findViewById(R.id.image_view));
 
         init_ui();
+        init_dialog();
     }
 
     private void init_ui()  {
@@ -131,6 +119,20 @@ public class EnterHoleScoreFragment extends Fragment implements
     }
 
 
+    private void init_dialog()  {
+
+        dialog = new AlertDialog.Builder(mActivity)
+                //.setView(v)
+                .setTitle(R.string.app_name)
+                //.setMessage("Your est wait time")
+                .setPositiveButton(R.string.Try_Again, null) //Set to null. We override the onclick
+                //.setNegativeButton(android.R.string.cancel, null)
+                .create();
+        dialog.setOnShowListener(this);
+        dialog.setOnDismissListener(this);
+    }
+
+
     @Override
     public void onClick(View view) {
 
@@ -157,7 +159,21 @@ public class EnterHoleScoreFragment extends Fragment implements
     public void waitTime(String json) {
         try {
 
-            Log.i(getClass().toString(), json);
+            JSONObject jsonObject = new JSONObject(json);
+            int esttime = (jsonObject.getInt("esttime")) / 60;
+            int ahead = jsonObject.getInt("ahead");
+
+            if (esttime != 0) {
+                dialog.setMessage("Your estimated wait time is: " + esttime + " minutes\n" +
+                        ahead + " rounds playing ahead of you.");
+                shouldDialogDismiss = false;
+                dialog.show();
+            } else {
+                new TimestampApi(this, Functions.roundId, (holeNumber - 1), true);
+                shouldDialogDismiss = true;
+                dialog.dismiss();
+            }
+
 
         } catch (Exception ignored) {}
     }
@@ -172,11 +188,34 @@ public class EnterHoleScoreFragment extends Fragment implements
     }
 
     @Override
-    public void updateProgress(String data) {
+    public void updateProgress(String data, boolean event) {
         try {
-
-            Log.i(getClass().toString(), data);
-
+            if (event)
+                Log.i("", "");
+ //               new WaitTimeApi(this, Functions.roundId, holeNumber - 1);
         } catch (Exception ignored) {}
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialogInterface) {
+        if (shouldDialogDismiss)
+            dialog.dismiss();
+        else
+            dialog.show();
+
+    }
+
+    @Override
+    public void onShow(DialogInterface dialogInterface) {
+        Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                new WaitTimeApi(EnterHoleScoreFragment.this, Functions.roundId, holeNumber - 1);
+                //Toast.makeText(mActivity, "Try Again", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

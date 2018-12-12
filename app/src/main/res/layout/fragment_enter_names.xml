@@ -19,12 +19,20 @@
         />
 
     <Button
+        android:id="@+id/submit_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/submit_button"
-        android:layout_alignParentBottom="true"
-        android:text="@string/Submit"
+        android:text= "@string/Submit"
+        android:background="@drawable/tutorial_button"
+        android:textColor="@android:color/white"
         android:textSize="20sp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="sans-serif-condensed"
+        android:textStyle="bold"
+        android:backgroundTint="#477D99"
+        android:padding="8dp"
+        android:layout_alignParentBottom="true"
         />
 
 </RelativeLayout>

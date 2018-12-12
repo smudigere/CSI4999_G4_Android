@@ -101,7 +101,7 @@ public class SelectFlagColorFragment extends Fragment implements
         try {
 
             // Creating adapter for spinner
-            ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(mActivity, android.R.layout.simple_spinner_item, flags);
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(mActivity, R.layout.my_spinner, flags);
 
             // Drop down layout style - list view with radio button
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

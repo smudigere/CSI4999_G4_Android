@@ -14,9 +14,13 @@ public class TimestampApi extends AsyncTask<String, String, Boolean> {
     private String API_RESULT;
     private Delegate delegate;
 
+    private boolean event;
+
     public TimestampApi(TimestampApi.Delegate delegate, int round, int hole, boolean event) {
 
         this.delegate = delegate;
+        this.event = event;
+
         String[] params = {"round", "hole", "event"};
 
         String API_URL = HOST + TIMESTAMP;
@@ -35,7 +39,7 @@ public class TimestampApi extends AsyncTask<String, String, Boolean> {
     protected Boolean doInBackground(String... params) {
         try {
 
-            API_RESULT = HttpConnection.httpGetConnection(params[0]);
+            API_RESULT = HttpConnection.httpConnection(params[0]);
 
             return true;
         } catch (Exception ignored) {}
@@ -47,11 +51,11 @@ public class TimestampApi extends AsyncTask<String, String, Boolean> {
         super.onPostExecute(result);
 
         if (result)
-            delegate.updateProgress(API_RESULT);
+            delegate.updateProgress(API_RESULT, event);
 
     }
 
     public interface Delegate   {
-        void updateProgress(String data);
+        void updateProgress(String data, boolean start);
     }
 }

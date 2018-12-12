@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.widget.ExpandableListView;
 
 import com.gptm.app.controller.HoleCount;
-import com.gptm.app.controller.ScoreExpandableListAdapter;
 import com.gptm.app.model.Player;
 import com.gptm.app.utility.Functions;
 
@@ -33,12 +32,12 @@ public class ScoreActivity extends AppCompatActivity implements
         mPlayers = Functions.getPlayers(this);
 
         int holeCount = HoleCount.getInstance().getHoleCount();
-
+/*
         ScoreExpandableListAdapter adapter =
                 new ScoreExpandableListAdapter(this, holeCount, mPlayers);
 
         mExpandableListView.setAdapter(adapter);
-        mExpandableListView.setOnGroupExpandListener(this);
+        mExpandableListView.setOnGroupExpandListener(this);*/
     }
 
     @Override

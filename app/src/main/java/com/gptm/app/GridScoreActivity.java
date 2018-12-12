@@ -291,6 +291,7 @@ public class GridScoreActivity extends AppCompatActivity {
                     textView.setTextColor(Color.BLACK);
                     break;
                 case 34:
+                    counter = 0;
                     for (int i = 0; i < 9; i++) {
                         try {
                             counter += ScoreTrackMap.getInstance().getmScoreMapList().get(i).get(0);
@@ -303,6 +304,7 @@ public class GridScoreActivity extends AppCompatActivity {
 
                     break;
                 case 35:
+                    counter = 0;
                     for (int i = 0; i < 18; i++) {
                         try {
                             counter += ScoreTrackMap.getInstance().getmScoreMapList().get(i).get(0);
@@ -319,15 +321,93 @@ public class GridScoreActivity extends AppCompatActivity {
                     textView.setBackgroundColor(Color.argb(255, 215, 170, 11));
                     textView.setTextColor(Color.BLACK);
                     break;
+                case 46:
+                    counter = 0;
+                    for (int i = 0; i < 9; i++) {
+                        try {
+                            counter += ScoreTrackMap.getInstance().getmScoreMapList().get(i).get(1);
+                        } catch (Exception ignored) {
+                        }
+                    }
+
+                    if (counter != 0)
+                        textView.setText(String.valueOf(counter));
+
+                    break;
+                case 47:
+                    counter = 0;
+                    for (int i = 0; i < 18; i++) {
+                        try {
+                            counter += ScoreTrackMap.getInstance().getmScoreMapList().get(i).get(1);
+                        } catch (Exception ignored) {
+                        }
+                    }
+
+                    if (counter != 0)
+                        textView.setText(String.valueOf(counter));
+
+                    break;
                 case 48:
                     textView.setText(Functions.getPlayers(mContext)[2].getPlayerName());
                     textView.setBackgroundColor(Color.argb(255, 215, 170, 11));
                     textView.setTextColor(Color.BLACK);
                     break;
+                case 58:
+                    counter = 0;
+                    for (int i = 0; i < 9; i++) {
+                        try {
+                            counter += ScoreTrackMap.getInstance().getmScoreMapList().get(i).get(2);
+                        } catch (Exception ignored) {
+                        }
+                    }
+
+                    if (counter != 0)
+                        textView.setText(String.valueOf(counter));
+
+                    break;
+                case 59:
+                    counter = 0;
+                    for (int i = 0; i < 18; i++) {
+                        try {
+                            counter += ScoreTrackMap.getInstance().getmScoreMapList().get(i).get(2);
+                        } catch (Exception ignored) {
+                        }
+                    }
+
+                    if (counter != 0)
+                        textView.setText(String.valueOf(counter));
+
+                    break;
                 case 60:
                     textView.setText(Functions.getPlayers(mContext)[3].getPlayerName());
                     textView.setBackgroundColor(Color.argb(255, 215, 170, 11));
                     textView.setTextColor(Color.BLACK);
+                    break;
+                case 70:
+                    counter = 0;
+                    for (int i = 0; i < 9; i++) {
+                        try {
+                            counter += ScoreTrackMap.getInstance().getmScoreMapList().get(i).get(3);
+                        } catch (Exception ignored) {
+                        }
+                    }
+
+                    if (counter != 0)
+                        textView.setText(String.valueOf(counter));
+
+                    break;
+                case 71:
+                    counter = 0;
+                    for (int i = 0; i < 18; i++) {
+                        try {
+                            counter += ScoreTrackMap.getInstance().getmScoreMapList().get(i).get(3);
+                        } catch (Exception ignored) {
+                        }
+                    }
+
+                    if (counter != 0)
+                        textView.setText(String.valueOf(counter));
+
                     break;
             }
 
@@ -405,6 +485,7 @@ public class GridScoreActivity extends AppCompatActivity {
                     textView.setTextColor(Color.BLACK);
                     break;
                 case 106:
+                    counter = 0;
                     for (int i = 9; i < 18; i++) {
                         try {
                             counter += ScoreTrackMap.getInstance().getmScoreMapList().get(i).get(0);
@@ -417,6 +498,7 @@ public class GridScoreActivity extends AppCompatActivity {
 
                     break;
                 case 107:
+                    counter = 0;
                     for (int i = 0; i < 18; i++) {
                         try {
                             counter += ScoreTrackMap.getInstance().getmScoreMapList().get(i).get(0);
@@ -433,15 +515,93 @@ public class GridScoreActivity extends AppCompatActivity {
                     textView.setBackgroundColor(Color.argb(255, 215, 170, 11));
                     textView.setTextColor(Color.BLACK);
                     break;
+                case 118:
+                    counter = 0;
+                    for (int i = 9; i < 18; i++) {
+                        try {
+                            counter += ScoreTrackMap.getInstance().getmScoreMapList().get(i).get(1);
+                        } catch (Exception ignored) {
+                        }
+                    }
+
+                    if (counter != 0)
+                        textView.setText(String.valueOf(counter));
+
+                    break;
+                case 119:
+                    counter = 0;
+                    for (int i = 0; i < 18; i++) {
+                        try {
+                            counter += ScoreTrackMap.getInstance().getmScoreMapList().get(i).get(1);
+                        } catch (Exception ignored) {
+                        }
+                    }
+
+                    if (counter != 0)
+                        textView.setText(String.valueOf(counter));
+
+                    break;
                 case 120:
                     textView.setText(Functions.getPlayers(mContext)[2].getPlayerName());
                     textView.setBackgroundColor(Color.argb(255, 215, 170, 11));
                     textView.setTextColor(Color.BLACK);
                     break;
+                case 130:
+                    counter = 0;
+                    for (int i = 9; i < 18; i++) {
+                        try {
+                            counter += ScoreTrackMap.getInstance().getmScoreMapList().get(i).get(2);
+                        } catch (Exception ignored) {
+                        }
+                    }
+
+                    if (counter != 0)
+                        textView.setText(String.valueOf(counter));
+
+                    break;
+                case 131:
+                    counter = 0;
+                    for (int i = 0; i < 18; i++) {
+                        try {
+                            counter += ScoreTrackMap.getInstance().getmScoreMapList().get(i).get(2);
+                        } catch (Exception ignored) {
+                        }
+                    }
+
+                    if (counter != 0)
+                        textView.setText(String.valueOf(counter));
+
+                    break;
                 case 132:
                     textView.setText(Functions.getPlayers(mContext)[3].getPlayerName());
                     textView.setBackgroundColor(Color.argb(255, 215, 170, 11));
                     textView.setTextColor(Color.BLACK);
+                    break;
+                case 142:
+                    counter = 0;
+                    for (int i = 9; i < 18; i++) {
+                        try {
+                            counter += ScoreTrackMap.getInstance().getmScoreMapList().get(i).get(3);
+                        } catch (Exception ignored) {
+                        }
+                    }
+
+                    if (counter != 0)
+                        textView.setText(String.valueOf(counter));
+
+                    break;
+                case 143:
+                    counter = 0;
+                    for (int i = 0; i < 18; i++) {
+                        try {
+                            counter += ScoreTrackMap.getInstance().getmScoreMapList().get(i).get(3);
+                        } catch (Exception ignored) {
+                        }
+                    }
+
+                    if (counter != 0)
+                        textView.setText(String.valueOf(counter));
+
                     break;
             }
 
@@ -482,7 +642,7 @@ public class GridScoreActivity extends AppCompatActivity {
                                 ScoreTrackMap.getInstance().getmScoreMapList().get((position - 125) + 1).get(3).toString()
                         )
                 );
-
+                textView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
             }
 
             if ((position >= 12 && position <= 23) ||

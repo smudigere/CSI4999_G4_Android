@@ -1,6 +1,8 @@
 package com.gptm.app.fragments;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -46,5 +48,14 @@ public class HomeFragment extends Fragment {
     private void init_button()  {
         mPlayButton = mView.findViewById(R.id.play_button);
         mPlayButton.setOnClickListener((View.OnClickListener) mActivity);
+
+        mView.findViewById(R.id.about_us_button)
+                .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://williambarden.com/Eagle/home.php"));
+                startActivity(browserIntent);
+            }
+        });
     }
 }

@@ -129,7 +129,7 @@ public class SelectGolfCourseFragment extends Fragment implements
             Functions.setCourseIdNameMap(courseIdNameMap);
 
             // Creating adapter for spinner
-            ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(mActivity, android.R.layout.simple_spinner_item, places);
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(mActivity, R.layout.my_spinner, places);
 
             // Drop down layout style - list view with radio button
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
